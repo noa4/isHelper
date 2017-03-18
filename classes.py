@@ -26,6 +26,7 @@ class Exigence:
         self.exigence_mere = exigence_mere
         self.critere = critere
         self.espece = espece
+        self.besoin = besoin
         #Pour une exigence fonctionnelle vaut 1 sinon vaut 0
         self.intitule = intitule
         self.niveau = niveau

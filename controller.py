@@ -4,9 +4,10 @@ Created on Thu Jan  5 08:40:48 2017
 
 @author: 2016-0687
 """
-from classes import *
-from modeles import *
 import sqlite3 as sql
+
+from modeles import *
+
 db = sql.connect('bdd.sql')
 '''
 cursor = db.cursor()
@@ -17,7 +18,7 @@ cursor.execute("""CREATE TABLE pieces(
 cursor.execute("""CREATE TABLE exigences(
             idex INTEGER PRIMARY KEY AUTOINCREMENT,
             type TEXT,
-            origine TEXT,
+            besoin INT,
             intitule TEXT,
             critere TEXT,
             espece INTEGER,

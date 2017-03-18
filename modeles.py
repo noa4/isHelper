@@ -58,13 +58,13 @@ class ExigencesMgr():
         self.db = db
         self.cursor = db.cursor()
         
-    def create(self, intitule,critere,espece=0, niveau=None,exigence_mere=1):
+    def create(self, intitule,critere,besoin,espece=0, niveau=None,exigence_mere=1):
         self.cursor.execute("""INSERT INTO exigences
-        (critere,niveau,intitule,espece,exigence_mere)
-        VALUES (?,?,?,?,?)""", 
-        (critere,niveau,intitule,espece,exigence_mere))
+        (critere,niveau,intitule,besoin,espece,exigence_mere)
+        VALUES (?,?,?,?,?,?)""",
+        (critere,niveau,intitule,besoin,espece,exigence_mere))
         idex = self.cursor.lastrowid   
-        return Exigence(idex,intitule,critere,espece, niveau,exigence_mere)
+        return Exigence(idex,intitule,critere,besoin,espece, niveau,exigence_mere)
         
     def delete(self, exigence):
         if(isinstance(exigence,Exigence)):

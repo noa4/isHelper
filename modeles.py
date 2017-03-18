@@ -89,10 +89,10 @@ class ExigencesMgr():
     def update(self, exigence):
         if(isinstance(exigence,Exigence)):
             self.cursor.execute("""UPDATE exigences 
-            (critere,niveau,intitule,extype,qualite,origine,exigence_mere)
-            VALUES (:critere,:niveau,:intitule,:extype,:qualite,:origine,:exigence_mere)
+            (critere,niveau,intitule,extype,espece,origine,exigence_mere)
+            VALUES (:critere,:niveau,:intitule,:extype,:espece,:origine,:exigence_mere)
             WHERE idex = :idex""", 
-            {idex:exigence.idex,extype:exigence.extype,origine:exigence.origine,intitule:exigence.intitule,critere:exigence.critere,niveau:exigence.niveau,exigence_mere:exigence.exigence_mere})
+            {idex:exigence.idex,extype:exigence.extype,origine:exigence.origine,espece:exigence.espece,intitule:exigence.intitule,critere:exigence.critere,niveau:exigence.niveau,exigence_mere:exigence.exigence_mere})
     
     def conclure(self,idex,conclusion):
         self.cursor.execute("""UPDATE exigences SET conclusion = ? WHERE idex = ?""", (conclusion,idex))

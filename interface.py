@@ -5,9 +5,9 @@ Created on Mon Dec 12 08:33:04 2016
 @author: 2016-0308
 """
 
-from classes import *
-from modeles import *
 import sqlite3 as sql
+
+from modeles import *
 
 db = sql.connect('bdd.sql')
 '''
@@ -215,6 +215,7 @@ def Del_Piece():
     import tkinter as tk
     fen = tk.Toplevel(fenetre)
 
+
     def Valider():
         MgrPieces.delete(nom_piece)
         fen.destroy()
@@ -341,6 +342,16 @@ def RenseignerGantt():
 
 
 fenetre = tk.Tk()
+fenetre.configure(background='#2c3e50')
+fenetre.title("IsHelper")
+logo = tk.PhotoImage(file="ish.gif")
+pic = tk.Label(fenetre, image=logo, bg='#2c3e50')
+pic.pack()
+# message d'accueil
+hometxt = "La solution d'aide à l'ingénierie système"
+text = tk.Label(fenetre, text=hometxt, bg='#2c3e50', fg='#ecf0f1', font=('Helvetica', 18))
+text.pack()
+
 menubar = tk.Menu(fenetre)
 
 value = tk.StringVar()

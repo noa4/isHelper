@@ -30,7 +30,7 @@ class BesoinsMgr():
         return besoins
     def update(self, besoin):
         if(isinstance(besoin,Besoin)):
-            self.cursor.execute("""UPDATE besoins (intitule,primaire) VALUES (:intitule, :primaire) WHERE id_besoin = :id_besoin""", {id_besoin:besoin.id_besoin(),intitule:besoin.nom(),primaire:besoin.primaire()})
+            self.cursor.execute("""UPDATE besoins SET intitule = ?, primaire=? WHERE id_besoin = ?""", (besoin.intitule, besoin.primaire,besoin.id_besoin))
        
 class PieceMgr():
     def __init__(self, db):

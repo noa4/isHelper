@@ -74,13 +74,13 @@ class ExigencesMgr():
         self.db = db
         self.cursor = db.cursor()
 
-    def create(self, intitule, critere, espece=0, niveau=None, exigence_mere=1):
+    def create(self, intitule,critere,besoin=None,espece=0, niveau=None,exigence_mere=1):
         self.cursor.execute("""INSERT INTO exigences
-        (critere,niveau,intitule,espece,exigence_mere)
-        VALUES (?,?,?,?,?)""",
-                            (critere, niveau, intitule, espece, exigence_mere))
-        idex = self.cursor.lastrowid
-        return Exigence(idex, intitule, critere, espece, niveau, exigence_mere)
+        (critere,niveau,intitule,besoin,espece,exigence_mere)
+        VALUES (?,?,?,?,?,?)""",
+        (critere,niveau,intitule,besoin,espece,exigence_mere))
+        idex = self.cursor.lastrowid   
+        return Exigence(idex,intitule,critere,besoin,espece, niveau,exigence_mere)
 
     def delete(self, exigence):
         if (isinstance(exigence, Exigence)):
@@ -107,11 +107,11 @@ class ExigencesMgr():
     def update(self, exigence):
         if (isinstance(exigence, Exigence)):
             self.cursor.execute("""UPDATE exigences
-            (critere,niveau,intitule,type,origine,exigence_mere)
+            (critere,niveau,intitule,type,besoin,espece,exigence_mere)
             VALUES (?,?,?,?,?,?,?)
             WHERE idex = ?""",
                                 (
-                                exigence.critere, exigence.niveau, exigence.intitule, exigence.espece, exigence.origine,
+                                exigence.critere, exigence.niveau, exigence.intitule, exigence.besoin, exigence.espece,
                                 exigence.exigence_mere, exigence.idex))
 
     def conclure(self, idex, conclusion):

@@ -23,12 +23,15 @@ class Besoin:
 
 
 class Exigence:
-    def __init__(self, idex, intitule, critere, espece=0, niveau=None, exigence_mere=0, origine=None):
+
+    def __init__(self, idex, intitule, critere, besoin=None, espece = 0,niveau=None, exigence_mere = 0):
         self.idex = idex
         self.exigence_mere = exigence_mere
         self.critere = critere
         self.espece = espece
-        # Pour une exigence fonctionnelle vaut 1 sinon vaut 0
+        #Pour une exigence fonctionnelle vaut 1 sinon vaut 0
+        self.besoin = besoin
+        #Le besoin dont découle l'exigence
         self.intitule = intitule
         self.niveau = niveau
         self.origine = origine

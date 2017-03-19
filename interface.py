@@ -5,9 +5,9 @@ Created on Mon Dec 12 08:33:04 2016
 @author: 2016-0308
 """
 
-import sqlite3 as sql
-
+from classes import *
 from modeles import *
+import sqlite3 as sql
 
 db = sql.connect('bdd.sql')
 '''
@@ -73,25 +73,26 @@ def Renseigner_Exigence():
     # récupération du type d'exigence
     fen = tk.Toplevel(fenetre)
 
-    def DemanderExigenceMere():
-        fen1 = tk.Toplevel(fen)
-        for i in MgrExigences.read():
-            tk.Radiobutton(fen1, text="id de l'exigence", variable=exigence_mere, value=i.idex).pack()
-        tk.Button(fen1, text="Valider", command=fen1.destroy).pack()
-
     def CreerExigence():
+        print(exigence_mere.get())
+        MgrExigences.create(intitule.get(), critere.get(), espece=int(value.get()), niveau=int(niveau.get()),
+                            exigence_mere=int(exigence_mere.get()))
+        fen.destroy()
+
+    def DemanderExigenceMere():
         if int(mere.get()) == True:
-            DemanderExigenceMere()
-            MgrExigences.create(intitule.get(), critere.get(), espece=int(value.get()), niveau=int(niveau.get()),
-                                exigence_mere=MgrExigences.read(exigence_mere.get()))
+            fen1 = tk.Toplevel(fen)
+            for i in MgrExigences.read():
+                tk.Radiobutton(fen1, text=str(i.idex), variable=exigence_mere, value=i.idex).pack()
+            tk.Button(fen1, text="Valider", command=CreerExigence).pack()
+        # print(intitule.get())
+        #            print(critere.get())
+        #            print(value.get())
+        #            print(niveau.get())
         else:
             MgrExigences.create(intitule.get(), critere.get(), espece=int(value.get()), niveau=int(niveau.get()),
                                 exigence_mere=0)
-        # print(intitule.get())
-        #        print(critere.get())
-        #        print(value.get())
-        #        print(niveau.get())
-        fen.destroy()
+            fen.destroy()
 
     def Valider():
         fen2 = tk.Toplevel(fen)
@@ -109,7 +110,7 @@ def Renseigner_Exigence():
         bouton4_1 = tk.Radiobutton(fen2, text="Oui", variable=mere, value=1)
         bouton4_2 = tk.Radiobutton(fen2, text="Non", variable=mere, value=0)
         # Bouton de sortie
-        bouton4 = tk.Button(fen2, text="Valider", command=CreerExigence)
+        bouton4 = tk.Button(fen2, text="Valider", command=DemanderExigenceMere)
 
         txt1.grid(row=0)
         txt2.grid(row=1)
@@ -166,7 +167,7 @@ def Renseigner_Piece():
     fen = tk.Toplevel(fenetre)
 
     def CreerPiece():
-        MgrPiecess.create(nom_piece.get(), couleur.get())
+        MgrPieces.create(nom_piece.get(), couleur.get())
         #        print(nom_piece.get())
         #        print(couleur.get())
         fen.destroy()
@@ -215,7 +216,6 @@ def Del_Piece():
     import tkinter as tk
     fen = tk.Toplevel(fenetre)
 
-
     def Valider():
         MgrPieces.delete(nom_piece)
         fen.destroy()
@@ -226,12 +226,19 @@ def Del_Piece():
     tk.Button(fen, text="Valider", command=Valider).pack()
 
 
+def Modifier_Exigence():
+    MgrExigences.read(1).intitule = 'momo le bresil'
+    MgrExigences.update(MgrExigences.read(1))
+
+
 def RenseignerGantt():
     import datetime
     import gantt
     import tkinter as tk
+    fenetre2 = tk.Toplevel(fenetre)
+
     def Renseigner_Projet():
-        fen = tk.Toplevel(fenetre1)
+        fen = tk.Toplevel(fenetre2)
 
         def Valider():
             liste_projet.append(gantt.Project(name=nom_projet.get()))
@@ -242,7 +249,7 @@ def RenseignerGantt():
         tk.Button(fen, text="Valider", command=Valider).pack()
 
     def Renseigner_Personnel():
-        fen = tk.Toplevel(fenetre1)
+        fen = tk.Toplevel(fenetre2)
 
         def Valider():
             liste_personne.append(gantt.Resource(nom_personne.get()))
@@ -252,11 +259,8 @@ def RenseignerGantt():
         tk.Entry(fen, textvariable=nom_personne, width=100).pack()
         tk.Button(fen, text="Valider", command=Valider).pack()
 
-    def Renseigner_Vacances():
-        print('pas fait')
-
     def Ajouter_Tache_Projet():
-        fen = tk.Toplevel(fenetre1)
+        fen = tk.Toplevel(fenetre2)
 
         def Valider():
             liste_projet[int(projet.get())].add_task(liste_tache[int(tache.get())])
@@ -269,7 +273,7 @@ def RenseignerGantt():
         tk.Button(fen, text="Valider", command=Valider).pack()
 
     def Renseigner_Tache():
-        fen = tk.Toplevel(fenetre1)
+        fen = tk.Toplevel(fenetre2)
 
         def Valider():
             liste_tache.append(gantt.Task(name=nom_tache.get(),
@@ -292,7 +296,7 @@ def RenseignerGantt():
         tk.Button(fen, text="Valider", command=Valider).pack()
 
     def Afficher_diagramme():
-        fen = tk.Toplevel(fenetre1)
+        fen = tk.Toplevel(fenetre2)
 
         def Valider():
             liste_projet[int(projet.get())].make_svg_for_tasks(filename=nom_diagramme.get() + '.svg',
@@ -319,27 +323,26 @@ def RenseignerGantt():
         tk.Entry(fen, textvariable=nom_diagramme, width=100).pack()
         tk.Button(fen, text="Valider", command=Valider).pack()
 
-    fenetre1 = tk.Toplevel(fenetre)
-
     # Définition des menus
-    menubar1 = tk.Menu(fenetre1)
+    menubarG = tk.Menu(fenetre2)
 
-    menu2 = tk.Menu(menubar1, tearoff=0)
-    menu2.add_command(label="Renseigner Projet", command=Renseigner_Projet)
-    menu2.add_command(label="Renseigner Personnel", command=Renseigner_Personnel)
-    menu2.add_command(label="Renseigner Tache", command=Renseigner_Tache)
-    menu2.add_command(label="Ajouter Tache au projet", command=Ajouter_Tache_Projet)
-    menu2.add_command(label="Renseigner Vacances", command=Renseigner_Vacances)
-    menu2.add_separator()
-    menu2.add_command(label="Quitter", command=fenetre1.destroy)
-    menubar1.add_cascade(label="Fichier", menu=menu2)
+    menuG = tk.Menu(menubarG, tearoff=0)
+    menuG.add_command(label="Renseigner Projet", command=Renseigner_Projet)
+    menuG.add_command(label="Renseigner Personnel", command=Renseigner_Personnel)
+    menuG.add_command(label="Renseigner Tache", command=Renseigner_Tache)
+    menuG.add_command(label="Ajouter Tache au projet", command=Ajouter_Tache_Projet)
+    menuG.add_separator()
+    menuG.add_command(label="Quitter", command=fenetre2.destroy)
+    menubarG.add_cascade(label="Fichier", menu=menuG)
 
-    menu2 = tk.Menu(menubar1, tearoff=0)
-    menu2.add_command(label="Visualisation", command=Afficher_diagramme)
-    menubar1.add_cascade(label="Affichage", menu=menu2)
+    menuG = tk.Menu(menubarG, tearoff=0)
+    menuG.add_command(label="Visualisation", command=Afficher_diagramme)
+    menubarG.add_cascade(label="Affichage", menu=menuG)
 
-    fenetre1.config(menu=menubar1)
+    fenetre2.config(menu=menubarG)
 
+
+import tkinter as tk
 
 fenetre = tk.Tk()
 fenetre.configure(background='#2c3e50')
@@ -393,7 +396,7 @@ menu1 = tk.Menu(menubar, tearoff=0)
 menu1.add_command(label="Renseigner Exigence", command=Renseigner_Exigence)
 menu1.add_command(label="Renseigner Besoin", command=Renseigner_Besoin)
 menu1.add_command(label="Renseigner Piece", command=Renseigner_Piece)
-# menu1.add_command(label="Modifier Exigence", command=Modifier_Exigence)
+menu1.add_command(label="Modifier Exigence", command=Modifier_Exigence)
 # menu1.add_command(label="Modifier Besoin", command=Modifier_Besoin)
 # menu1.add_command(label="Modifier Piece", command=Modifier_Piece)
 menu1.add_command(label='Supprimer Exigence', command=Del_Exigence)
@@ -401,7 +404,6 @@ menu1.add_command(label='Supprimer Besoin', command=Del_Besoin)
 menu1.add_command(label='Supprimer Pièce', command=Del_Piece)
 menu1.add_separator()
 menu1.add_command(label="Quitter", command=fenetre.destroy)
-menu1.add_command(label="Renseigner diagramme Gantt", command=RenseignerGantt)
 menubar.add_cascade(label="Gérer", menu=menu1)
 
 menu2 = tk.Menu(menubar, tearoff=0)
@@ -411,8 +413,15 @@ menu2.add_command(label="Coller")
 menubar.add_cascade(label="Editer", menu=menu2)
 
 menu3 = tk.Menu(menubar, tearoff=0)
-menu3.add_command(label="A propos", command=Renseigner_Aide)
-menubar.add_cascade(label="Aide", menu=menu3)
+menu3.add_command(label="Gantt", command=RenseignerGantt)
+menubar.add_cascade(label="Diagramme", menu=menu3)
+
+menu4 = tk.Menu(menubar, tearoff=0)
+menu4.add_command(label="A propos", command=Renseigner_Aide)
+menubar.add_cascade(label="Aide", menu=menu4)
 
 fenetre.config(menu=menubar)
 fenetre.mainloop()
+
+
+

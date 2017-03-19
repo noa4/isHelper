@@ -21,7 +21,7 @@ class Besoin:
         
 class Exigence:
     
-    def __init__(self, idex, intitule, critere, besoin, espece = 0,niveau=None, exigence_mere =0):
+    def __init__(self, idex, intitule, critere, besoin=None, espece = 0,niveau=None, exigence_mere =0):
         self.idex = idex
         self.exigence_mere = exigence_mere
         self.critere = critere

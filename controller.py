@@ -9,6 +9,7 @@ import sqlite3 as sql
 from modeles import *
 
 db = sql.connect('bdd.sql')
+
 '''
 cursor = db.cursor()
 cursor.execute("""CREATE TABLE pieces(
@@ -39,8 +40,9 @@ cursor.execute("""CREATE TABLE testresults(
             critere TEXT,
             niveau INT);""")
 db.commit()
-
 '''
+
+
 """
 b = Exigence(3,'doit poser la pièce', '5%',0)
 c = Exigence(8,'doit déplacer la pièce', '10%',1)
@@ -48,5 +50,6 @@ d = Exigence(4,'doit capter la couleur de la pièce', '15%')
 """
 
 mgr = ExigencesMgr(db)
-a = mgr.create('doit lever la pièce','bras metallique',1,'3%',13)
+a = mgr.create('doit lever la pièce','bras metallique',1,1,'3%',13)
+
 print(a)

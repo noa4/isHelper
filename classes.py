@@ -34,7 +34,6 @@ class Exigence:
         #Le besoin dont découle l'exigence
         self.intitule = intitule
         self.niveau = niveau
-        self.origine = origine
 
     def __str__(self):
         espece = "non fonctionnelle"

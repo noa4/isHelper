@@ -52,4 +52,9 @@ d = Exigence(4,'doit capter la couleur de la pièce', '15%')
 mgr = ExigencesMgr(db)
 a = mgr.create('doit lever la pièce','bras metallique',1,1,'3%',13)
 
+bmgr = BesoinsMgr(db)
+b1 = bmgr.create("Identifier une piece", 1)
+b2 = bmgr.create("Déplacer la pièce", 1)
+
 print(a)
+print(b1)

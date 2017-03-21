@@ -19,7 +19,7 @@ cursor.execute("""CREATE TABLE pieces(
 cursor.execute("""CREATE TABLE exigences(
             idex INTEGER PRIMARY KEY AUTOINCREMENT,
             type TEXT,
-            origine TEXT,
+            besoin INT,
             intitule TEXT,
             critere TEXT,
             espece INTEGER,
@@ -34,13 +34,12 @@ cursor.execute("""CREATE TABLE systeme(
 cursor.execute("""CREATE TABLE besoins(
             id_besoin INTEGER PRIMARY KEY,
             intitule TEXT,
-            besoinprimaire INTEGER); """)
+            primaire INTEGER); """)
 cursor.execute("""CREATE TABLE testresults(
             idex INTEGER PRIMARY KEY,
             critere TEXT,
             niveau INT);""")
 db.commit()
-
 '''
 """
 b = Exigence(3,'doit poser la pièce', '5%',0)
@@ -75,7 +74,7 @@ def Renseigner_Exigence():
 
     def CreerExigence():
         print(exigence_mere.get())
-        MgrExigences.create(intitule.get(), critere.get(), espece=int(value.get()), niveau=int(niveau.get()),
+        MgrExigences.create(intitule.get(), critere.get(), besoin=int(besoin_origine.get()), espece=int(value.get()), niveau=int(niveau.get()),
                             exigence_mere=int(exigence_mere.get()))
         fen.destroy()
 
@@ -90,9 +89,11 @@ def Renseigner_Exigence():
         #            print(value.get())
         #            print(niveau.get())
         else:
-            MgrExigences.create(intitule.get(), critere.get(), espece=int(value.get()), niveau=int(niveau.get()),
+            MgrExigences.create(intitule.get(), critere.get(), besoin=int(besoin_origine.get()), espece=int(value.get()), niveau=int(niveau.get()),
                                 exigence_mere=0)
             fen.destroy()
+
+
 
     def Valider():
         fen2 = tk.Toplevel(fen)
@@ -109,8 +110,8 @@ def Renseigner_Exigence():
         txt4 = tk.Label(fen2, text='Exigence mère :')
         bouton4_1 = tk.Radiobutton(fen2, text="Oui", variable=mere, value=1)
         bouton4_2 = tk.Radiobutton(fen2, text="Non", variable=mere, value=0)
-        # Bouton de sortie
-        bouton4 = tk.Button(fen2, text="Valider", command=DemanderExigenceMere)
+        #Récupération beoin lié
+        txt5 = tk.Label(fen2, text='Besoin lié :')
 
         txt1.grid(row=0)
         txt2.grid(row=1)
@@ -121,7 +122,13 @@ def Renseigner_Exigence():
         entree2.grid(row=2, column=1)
         bouton4_1.grid(row=3, column=1, )
         bouton4_2.grid(row=3, column=2)
-        bouton4.grid(row=4, column=1)
+        txt5.grid(row=4)
+        for i in MgrBesoins.read():
+            tk.Radiobutton(fen2, text=str(i.id_besoin), variable=besoin_origine, value=i.id_besoin).pack()
+        print(besoin_origine.get())
+        # Bouton de sortie
+        bouton4 = tk.Button(fen2, text="Valider", command=DemanderExigenceMere)
+        bouton4.pack()
 
     bouton1 = tk.Radiobutton(fen, text="Fonctionnelle", variable=value, value=1)
     bouton2 = tk.Radiobutton(fen, text="Non Fonctionnelle", variable=value, value=0)
@@ -140,11 +147,11 @@ def Renseigner_Besoin():
         MgrBesoins.create(intitule1.get(), int(value.get()))
         #        print(intitule1.get())
         #        print(value.get())
-        fenetre.destroy()
+        fen.destroy()
 
     def Valider():
         fen2 = tk.Toplevel(fen)
-        # récupération de l'intitulé de l'exigence
+        # récupération de l'intitulé du besoin
         txt1 = tk.Label(fen2, text='Intitulé :')
         entree0 = tk.Entry(fen2, textvariable=intitule1, width=100)
         # Bouton de sortie
@@ -227,9 +234,97 @@ def Del_Piece():
 
 
 def Modifier_Exigence():
-    MgrExigences.read(1).intitule = 'momo le bresil'
-    MgrExigences.update(MgrExigences.read(1))
+    fen = tk.Toplevel(fenetre)
 
+    def Update():
+        MgrExigences.read(int(nom_exigence.get())).intitule = intitule.get()
+        MgrExigences.read(int(nom_exigence.get())).critere = critere.get()
+        MgrExigences.read(int(nom_exigence.get())).besoin = besoin_origine.get()
+        MgrExigences.read(int(nom_exigence.get())).espece = value.get()
+        MgrExigences.read(int(nom_exigence.get())).niveau = niveau.get()
+        MgrExigences.update(MgrExigences.read(int(nom_exigence.get())))
+        fen.destroy()
+
+    def Valider():
+        # récupération de l'intitulé de l'exigence
+        txt1 = tk.Label(fen, text='Intitulé :')
+        entree0 = tk.Entry(fen, textvariable=intitule, width=100)
+        # récupération de la caractéristique de l'exigence
+        txt2 = tk.Label(fen, text='Caractéristique :')
+        entree1 = tk.Entry(fen, textvariable=critere, width=30)
+        # récupération du niveau du critère
+        txt3 = tk.Label(fen, text='Niveau du critère :')
+        entree2 = tk.Entry(fen, textvariable=niveau, width=30)
+        # Récupération beoin lié
+        txt5 = tk.Label(fen, text='Besoin lié :')
+
+        txt1.grid(row=0)
+        txt2.grid(row=1)
+        txt3.grid(row=2)
+        entree0.grid(row=0, column=1)
+        entree1.grid(row=1, column=1)
+        entree2.grid(row=2, column=1)
+        txt5.grid(row=4)
+        for i in MgrBesoins.read():
+            tk.Radiobutton(fen, text=str(i.id_besoin), variable=besoin_origine, value=i.id_besoin).pack()
+        print(besoin_origine.get())
+        # Bouton de sortie
+        bouton4 = tk.Button(fen, text="Valider", command=Update)
+        bouton4.pack()
+
+    tk.Label(fen, text ="Identifiant de l'exigence à modifier: ").pack()
+    for i in MgrExigences.read():
+        texte = str(i.idex)
+        tk.Radiobutton(fen, text=texte, variable=nom_exigence, value=i.idex).pack()
+    tk.Button(fen, text="Valider", command=Valider).pack()
+
+def Modifier_Besoin():
+    fen = tk.Toplevel(fenetre)
+
+    def Update():
+        MgrBesoins.read(int(nom_besoin.get())).intitule = intitule1.get()
+        MgrBesoins.read(int(nom_besoin.get())).primaire = int(value.get())
+        MgrBesoins.update(MgrBesoins.read(int(nom_besoin.get())))
+        fen.destroy()
+
+    def Valider():
+        # récupération de l'intitulé du besoin
+        txt1 = tk.Label(fen, text='Intitulé :')
+        entree0 = tk.Entry(fen, textvariable=intitule1, width=100)
+        txt1.grid(row=0)
+        entree0.grid(row=0, column=1)
+        tk.Radiobutton(fen, text="Besoin Primaire", variable=value, value=1).pack()
+        tk.Radiobutton(fen, text="Besoin Secondaire", variable=value, value=0).pack()
+        tk.Button(fen, text="Valider", command=Update).pack()
+
+    tk.Label(fen, text="Identifiant du besoin à modifier: ").pack()
+    for i in MgrBesoins.read():
+        texte = str(i.id_besoin)
+        tk.Radiobutton(fen, text=texte, variable=nom_besoin, value=i.id_besoin).pack()
+    tk.Button(fen, text="Valider", command=Valider).pack()
+
+def Modifier_Piece():
+    fen = tk.Toplevel(fenetre)
+
+    def Update():
+        # Mise à jour des variables
+        MgrPieces.read(int(nom_piece.get())).nom = intitule_piece.get()
+        MgrPieces.read(int(nom_piece.get())).couleur = couleur.get()
+        MgrPieces.update(MgrPieces.read(int(nom_piece.get())))
+        fen.destroy()
+
+    def Valider():
+        tk.Label(fen, text='Nom de la pièce :').pack()
+        tk.Entry(fen, textvariable=intitule_piece, width=50).pack()
+        tk.Label(fen, text='Couleur :').pack()
+        tk.Entry(fen, textvariable=couleur, width=50).pack()
+        tk.Button(fen, text="Valider", command=Update).pack()
+
+    tk.Label(fen, text="Identifiant de la pièce à modifier: ").pack()
+    for i in MgrPieces.read():
+        texte = str(i.id_piece)
+        tk.Radiobutton(fen, text=texte, variable=nom_piece, value=i.id_piece).pack()
+    tk.Button(fen, text="Valider", command=Valider).pack()
 
 def RenseignerGantt():
     import datetime
@@ -365,13 +460,14 @@ niveau = tk.StringVar()
 mere = tk.StringVar()
 exigence_mere = tk.StringVar()
 nom_exigence = tk.StringVar()
+besoin_origine = tk.StringVar(None)
 # Besoin
 intitule1 = tk.StringVar()
 nom_besoin = tk.StringVar()
 # Pièce
 nom_piece = tk.StringVar()
 couleur = tk.StringVar()
-nom_piece = tk.StringVar()
+intitule_piece = tk.StringVar()
 # Projet
 nom_projet = tk.StringVar()
 liste_projet = list()
@@ -397,8 +493,8 @@ menu1.add_command(label="Renseigner Exigence", command=Renseigner_Exigence)
 menu1.add_command(label="Renseigner Besoin", command=Renseigner_Besoin)
 menu1.add_command(label="Renseigner Piece", command=Renseigner_Piece)
 menu1.add_command(label="Modifier Exigence", command=Modifier_Exigence)
-# menu1.add_command(label="Modifier Besoin", command=Modifier_Besoin)
-# menu1.add_command(label="Modifier Piece", command=Modifier_Piece)
+menu1.add_command(label="Modifier Besoin", command=Modifier_Besoin)
+menu1.add_command(label="Modifier Piece", command=Modifier_Piece)
 menu1.add_command(label='Supprimer Exigence', command=Del_Exigence)
 menu1.add_command(label='Supprimer Besoin', command=Del_Besoin)
 menu1.add_command(label='Supprimer Pièce', command=Del_Piece)

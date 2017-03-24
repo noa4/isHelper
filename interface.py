@@ -163,9 +163,9 @@ def Renseigner_Besoin():
         entree0.grid(row=0, column=1)
         bouton4.grid(row=3, column=1)
 
-    bouton1 = tk.Radiobutton(fen, text="Besoin Primaire", variable=value, value=1)
-    bouton2 = tk.Radiobutton(fen, text="Besoin Secondaire", variable=value, value=0)
-    bouton3 = tk.Button(fen, text="Valider", command=Valider)
+    bouton1 = tk.Radiobutton(fenetre, text="Besoin Primaire", variable=value, value=1)
+    bouton2 = tk.Radiobutton(fenetre, text="Besoin Secondaire", variable=value, value=0)
+    bouton3 = tk.Button(fenetre, text="Valider", command=Valider)
     bouton1.pack()
     bouton2.pack()
     bouton3.pack()
@@ -459,16 +459,19 @@ def tkupdate():
         menu1.add_command(label="Quitter", command=fenetre.destroy)
         menubar.insert_cascade(0, label='Gérer', menu=menu1)
 
+def Fenetre_acceuil():
+    fenetre.configure(background='#2c3e50')
+    fenetre.title("IsHelper")
+    logo = tk.PhotoImage(file="ish.gif")
+    pic = tk.Label(fenetre, image=logo, bg='#2c3e50')
+    pic.pack()
+    # message d'accueil
+    hometxt = "La solution d'aide à l'ingénierie système"
+    text = tk.Label(fenetre, text=hometxt, bg='#2c3e50', fg='#ecf0f1', font=('Helvetica', 18))
+    text.pack()
+
 fenetre = tk.Tk()
-fenetre.configure(background='#2c3e50')
-fenetre.title("IsHelper")
-logo = tk.PhotoImage(file="ish.gif")
-pic = tk.Label(fenetre, image=logo, bg='#2c3e50')
-pic.pack()
-# message d'accueil
-hometxt = "La solution d'aide à l'ingénierie système"
-text = tk.Label(fenetre, text=hometxt, bg='#2c3e50', fg='#ecf0f1', font=('Helvetica', 18))
-text.pack()
+Fenetre_acceuil()
 
 menubar = tk.Menu(fenetre)
 

@@ -1,0 +1,68 @@
+B.Ser 1;Gérer le flux des pièces;Implicite;;;;;E.F 1;Le robot doit récupérer la pièce en entrée;B.SI 1
+B.Ser 1.1;Acheminer la pièces dans la zone de travail;Implicite;;;;;E.F 1.1;Le robot doit pouvoir soulever une pièce de 60g;B.Ser 1.1
+B.Ser 1.2;Évacuer la pièce dans la zone correspondante;Cahier des charges;;;;;E.F 1.2;Le robot doit pouvoir lacher la pièce avec une précision d'un tenon;B.Ser 1.2
+B.Ser 1.3;Transférer la pièce d'une zone à l'autre dans un temps limité;Cahier des charges;;;;;E.F 1.3;Le robot doit pouvoir saisir une pièce de dimension 4x4 tenons;B.Ser
+B.Ser 1.4;Commander de manière télé-opéré;Cahier des charges;;;;;E.F 1.3;Le robot doit pouvoir tourner de 180° en moins de 5 secondes;B.Ser 1.3
+B.Ser 1.5;Rester en équilibre l'ordre du déplacement;Implicite;;;;;E.F 2;Le robot doit pouvoir détecter les couleurs (code RGB);B.Ser 2
+B.Ser 2;Reconnaître la couleur de la pièce;Implicite;;;;;E.F 2.1;Le robot doit détecter une pièce bleue;B.Ser 2.1
+B.Ser 2.1;Apprécier la longueur d'onde de la pièce;Implicite;;;;;E.F 2.2;Le robot doit passer en mode télé-opéré dès le début de la mission;B.Ser 2.2
+B.Ser 2.2;Commander de manière télé-opéré;Cahier des charges;;;;;E.F 3;Le robot doit pouvoir détecter les dimensions de la pièce saisie;B.Ser 3
+B.Ser 3;Reconnaître la forme de la pièce;Implicite;;;;;E.F 3.1;Le robot doit différencier les pièces de dimension 4x4x2 des autres;B.Ser 3.1
+B.Ser 3.1;Détecter les dimensions de la pièce;Implicite;;;;;E.F 3.2;Le robot doit passer en mode télé-opéré dès le début de la mission;B.Ser 3.2
+B.Ser 3.2;Commander de manière télé-opéré;Cahier des charges;;;;;;;
+B.Ser 4;Les éléments doivent être alimentés par des piles;Implicite;;;;;Identifiant;Exigences d'efficacité;Origine
+;;;;;;;E.Eff 1;Chaque tri doit être réalisé en 30s maximum;B.Eff 1
+Identifiant;Efficacité attendue;Origine;;;;;E.Eff 2;La batterie doit pouvoir alimenter le robot pensant 6 heures minimum;B.Eff 2
+B.Eff 1;Réaliser un tri en moins de 30 secondes;Cahier des charges;;;;;E.Eff 3;La capacité de stockage du programme doit être supérieure à 60ko;B.Eff 3
+B.Eff 2;Pouvoir être sur batterie pendant 6 heures sans recharge;Implicite;;;;;E.Eff 4;Les commandes du robot doivent être intuitives pour l'opérateur;B.Eff 4
+B.Eff 3;Stocker l'intégralité du programme;Implicite;;;;;;;
+B.Eff 4;Pouvoir être facilement maniable par l'opérateur;Opérateur;;;;;Identifiant;Exigences d'intéractions et connexions;Origine
+;;;;;;;E.IC 1;La batterie doit être facilement accessible;B.IC 1
+Identifiant;Intéractions et connexions;Origine;;;;;E.IC 2;Les deux programmes doivent pouvoir être intervertis en moins d'une minute;B.IC 3
+B.IC 1;Les batteries doivent être accessibles facilement;Maintenance;;;;;E.IC 3;La transmission des données doit se faire en bluetooth;B.IC 4
+B.IC 2;Saisir la pièce;Implicite;;;;;E.IC 3.1;L'opérateur doit se trouver à moins de 10m du robot;B.IC 4
+B.IC 3;Permettre à l'opérateur de sélectionner facilement le mode de fonctionnement;Opérateur;;;;;E.IC 4;Les deux programmes doivent être prêts à être utilisés;B.IC 5
+B.IC 4;Envoyer et recevoir des informations à l'opérateur;Opérateur;;;;;;;
+B.IC 5;Permettre à l'opérateur de télécharger un programme facilement ;Maintenance;;;;;Identifiant;Facteurs humains;Origine
+;;;;;;;E.FH 1;L'opérateur doit apprendre rapidement à contrôler le robot;B.FH 1
+Identifiant;Facteurs humains;Origine;;;;;;;
+B.FH 1;Apprentissage du fonctionnement de l'interface opérateur;Opérateur;;;;;Identifiant;Sureté de fonctionnement;Origine
+;;;;;;;E.SF 1;Le robot doit arrêter son mouvement en cas de perte d'équilibre;B.SF 1
+Identifiant;Sûreté de fonctionnement;Origine;;;;;E.SF 2;La projection du robot doit rester dans l'aire de travail;B.SF 2
+B.SF 1;Arrêter le mouvement en cas de perte d'équilibre;Opérateur;;;;;;;
+B.SF 2;Rester dans la zone de travail;Cahier des charges;;;;;Identifiant;Environnement opérationnel imposé;Origine
+;;;;;;;E.Env 1;La zone de travail a pour dimensions 32x32 tenons;B.Env 1
+Identifiant;Sécurité de l'information;Origine;;;;;E.Env 1.1;La projection du robot doit rester dans l'aire de travail;B.Env 1
+B.SI 1;Assurer la transmission des instructions entre l'opérateur et la brique intelligente;Implicite;;;;;E.Env 2;Le robot doit fonctionner dans les conditions Environnementales fixées;B.Env 2
+;;;;;;;E.Env 2.1;La température ambiante varie entre 15°C et 32°C;B.Env 2
+Identifiant;Environnement opérationnel imposé;Origine;;;;;E.Env 2.2;La pression atmosphérique est comprise entre 1000mb et 1030mb;B.Env 2
+B.Env 1;S'adapter à l'Environnement imposé : dimensions de la zone de travail…;Implicite;;;;;E.Env 2.3;L'hygrométrie est comprise entre 40% et 75%;B.Env 2
+B.Env 2;S'adapter aux conditions Environnementales : température, pression, lumière;Implicite;;;;;E.Env 2.4;La luminosité est comprise entre 100 et 300 lumen;B.Env 2
+B.Env 3;S'adapter aux conditions mécaniques : vibrations, gravité…;Implicite;;;;;E.Env 3;Le robot doit s'adapter à l'Environnement mécanique;B.Env 3
+;;;;;;;E.Env 3.1;Le robot doit absorber les vibrations sans être deséquilibré;B.Env 3
+Identifiant;Transport et stockage;Origine;;;;;E.Env 3.2;Le robot doit compenser la gravité lorsqu'il transporte la pièce;B.Env 3
+B.TS 1;Etre transportable et stockable dans une boite de dimension raisonnable;Equipe;;;;;;;
+;;;;;;;Identifiant;Transport et stockage;Origine
+Identifiant;Contraintes de réalisation;Origine;;;;;E.TS1;Le robot doit être démontable et transportable dans une boite;B.TS 1
+C.Real 1;Utiliser l'énergie électrique fournie (piles ou batterie);Implicite;;;;;;;
+C.Real 2;Respecter les dimensions maximales;Cahier des charges;;;;;Identifiant;Contraintes de réalisation;Origine
+C.Real 3;Avoir un bouton pour démarrer le tri de couleur;Opérateur;;;;;E.Real 1;Le robot doit utiliser l'énergie électrique fournie par la batterie;B.Real 1
+C.Real 4;Avoir un bouton pour démarrer le tri dimensionnel;Opérateur;;;;;E.Real 2;Le robot doit avoir pour dimensions maximales 26x29 tenons;B.Real 2
+;;;;;;;E.Real 3;Le robot doit avoir un bouton pour réaliser la mission de tri couleur;B.Real 3
+Identifiant;Contrainte de mise en service;Origine;;;;;E.Real 4;Le robot doit avoir un bouton pour réaliser la mission de tri dimensionnel;B.Real 4
+C.MeS 1;Etre déposé par l'opérateur sur la zone de travail;Opérateur;;;;;;;
+;;;;;;;Identifiant;Contraintes de mise en service;Origine
+Identifiant;Contrainte de retrait de service;Origine;;;;;E.MeS 1;Le robot doit être déposé par l'opérateur sur l'aire de travail;B.MeS 1
+C.RdS 1;Etre retiré de la zone de travail par l'opérateur;Opérateur;;;;;;;
+;;;;;;;Identifiant;Contrainte de retrait de service;Origine
+Identifiant;Contraintes de Production;Origine;;;;;E.RdS 1;Le robot doit être retiré par l'opérateur de l'aire de travail;B.RdS 1
+C.Prod 1;Utiliser des briques LEGO fournies dans le kit Mindstorms uniquement;Cahier des charges;;;;;;;
+C.Prod 2;Utliser le logiciel LEGO EV3 pour programmer la brique intelligente;Opérateur;;;;;Identifiant;Contraintes de Production;Origine
+;;;;;;;E.Prod 1;Le robot doit être constitué de pièces LEGO venant des deux kit Mindstorm uniquement;B.Prod 1
+Identifiant;Contrainte de réglementation;Origine;;;;;E.Prod 2;Les instructions doivent être programmées avec le logiciel LEGO EV3;B.Prod 2
+C.Reg 1;Respecter le règlement du concours ROBAFIS;Implicite;;;;;;;
+;;;;;;;Identifiant;Contrainte de réglementation;Origine
+Identifiant;Contrainte de coût et délais;Origine;;;;;E.Reg 1;Tous les rendus doivent respecter le règlement du concours ROBAFIS;B.Reg 1
+C.CD 1;Respecter les délais de Production;M. ETIENNE;;;;;;;
+;;;;;;;Identifiant;Contrainte de coût et délais;Origine
+;;;;;;;E.CD 1;Le robot doit être livré dans les délais;B.CD 1

@@ -124,11 +124,11 @@ def Renseigner_Exigence():
         bouton4_2.grid(row=3, column=2)
         txt5.grid(row=4)
         for i in MgrBesoins.read():
-            tk.Radiobutton(fen2, text=str(i.id_besoin), variable=besoin_origine, value=i.id_besoin).pack()
+            tk.Radiobutton(fen2, text=str(i.id_besoin), variable=besoin_origine, value=i.id_besoin).grid(column =1)
         print(besoin_origine.get())
         # Bouton de sortie
         bouton4 = tk.Button(fen2, text="Valider", command=DemanderExigenceMere)
-        bouton4.pack()
+        bouton4.grid(column = 1)
 
     bouton1 = tk.Radiobutton(fen, text="Fonctionnelle", variable=value, value=1)
     bouton2 = tk.Radiobutton(fen, text="Non Fonctionnelle", variable=value, value=0)
